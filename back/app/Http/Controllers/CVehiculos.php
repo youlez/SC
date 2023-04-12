@@ -24,9 +24,15 @@ class CVehiculos extends Controller
     {
         Vehiculos::find($request->id_vehiculo)->delete();
     }
+    public function vehiculosByConductor($id_conductor)
+    {
+        return Vehiculos::where('fk_id_conductor', $id_conductor)
+            ->get();
+    }
     public function asociarConductor(Request $request)
     {
-        Vehiculos::where('id_vehiculo', $request->id_vehiculo)
-            ->update(['fk_id_conductor', $request->id_conductor]);
+        $vehiculo = Vehiculos::find($request->id_vehiculo);
+        $vehiculo['fk_id_conductor'] = $request->id_conductor;
+        $vehiculo->save();
     }
 }

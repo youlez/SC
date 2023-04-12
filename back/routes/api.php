@@ -29,11 +29,12 @@ Route::group(['prefix' => 'SC'], function () {
     Route::post('/guardarConductor', $controllerConductores . '@save');
     Route::delete('/eliminarConductor', $controllerConductores . '@delete');
 
-    $controllerVehiculos = "\App\Http\Controllers\CConductores";
+    $controllerVehiculos = "\App\Http\Controllers\CVehiculos";
 
     Route::apiResource('vehiculos', '\App\Http\Controllers\CVehiculos');
     Route::get('/vehiculos', $controllerVehiculos . '@all');
     Route::post('/guardarVehiculo', $controllerVehiculos . '@save');
     Route::delete('/eliminarVehiculo', $controllerVehiculos . '@delete');
+    Route::get('/vehiculosAsociados/{id}', $controllerVehiculos . '@vehiculosByConductor');
     Route::post('/asociarConductor', $controllerVehiculos . '@asociarConductor');
 });

@@ -14,12 +14,13 @@ class CConductores extends Controller
     }
     public function save(Request $request)
     {
-        $parametros = ['identificacion' => $request->identificacion];
+        $datos = json_decode($request->formData);
+        $parametros = ['identificacion' => $datos->identificacion];
         $upsert = [];
-        $upsert['apellido'] = $request->apellido;
-        $upsert['nombre'] = $request->nombre;
-        $upsert['telefono'] = $request->telefono;
-        $upsert['direccion'] = $request->direccion;
+        $upsert['apellido'] = $datos->apellido;
+        $upsert['nombre'] = $datos->nombre;
+        $upsert['telefono'] = $datos->telefono;
+        $upsert['direccion'] = $datos->direccion;
         Conductores::updateOrCreate($parametros, $upsert);
     }
     public function delete(Request $request)
