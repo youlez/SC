@@ -10,22 +10,26 @@ class CVehiculos extends Controller
 {
     public function all()
     {
-        return Vehiculos::whit('conductor')->all();
+        return Vehiculos::with('conductor')->get();
     }
-    public function store(Request $request)
+    public function save(Request $request)
     {
-        $parametros = ['placa' => $request->placa];
+        $datos = json_decode($request->formData);
+        $parametros = ['placa' => $datos->placa];
         $upsert = [];
-        $upsert['modelo'] = $request->modelo;
-        $upsert['capacidad'] = $request->capacidad;
+        $upsert['modelo'] = $datos->modelo;
+        $upsert['capacidad'] = $datos->capacidad;
         Vehiculos::updateOrCreate($parametros, $upsert);
     }
-    public function destroy(Request $request)
+    public function delete(Request $request)
     {
         Vehiculos::find($request->id_vehiculo)->delete();
     }
     public function vehiculosByConductor($id_conductor)
     {
+        if ($id_conductor == "null") {
+            $id_conductor = null;
+        }
         return Vehiculos::where('fk_id_conductor', $id_conductor)
             ->get();
     }
